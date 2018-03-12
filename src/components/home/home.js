@@ -9,17 +9,31 @@ class Home extends Component {
         super(props)
         this.state = {
             name: '',
-            user:{}
+            location: '',
+            user: {}
         }
     }
 
     componentDidMount() {
         axios.get('/api/getUsers').then(res => {
-            console.log(res)
+            console.log(res.data)
             this.setState({
                 user: res.data
             })
         })
+    }
+
+
+    // 36E
+    updateFriend() {
+        axios.put('/api/updateFriend/' + this.props.match.params.id, this.state)
+            .then((response) => {
+                this.setState({
+                    name: response.data[0].name,
+                    location: response.data[0].location
+                })
+
+            })
     }
 
 

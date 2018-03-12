@@ -1,4 +1,6 @@
 module.exports = {
+
+    // 70K
     login: (req, res, next) =>{
         let {username} = req.body;
         const db = req.app.get('db');
@@ -7,12 +9,12 @@ module.exports = {
             const user = users.find(user=> user.username === username);
             
             if (user) {
-                console.log(req.session.user);
+                console.log(req.session.user, "This is the session user");
                 req.session.user.username = user.username;
                 res.status(200).send(req.session.user);
             }
             else {
-                res.status(403).send('Please Register');
+                res.status(403).send('You need to make an account');
             }
 
         }).catch(e=>console.log(e))
