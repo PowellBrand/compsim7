@@ -9,7 +9,7 @@ module.exports = {
             const user = users.find(user=> user.username === username);
             
             if (user) {
-                console.log(req.session.user, "This is the session user");
+                console.log(req.passport.session, "string cheese");
                 req.session.user.username = user.username;
                 res.status(200).send(req.session.user);
             }
@@ -20,20 +20,10 @@ module.exports = {
         }).catch(e=>console.log(e))
     },
 
-    register: (req, res, next) => {
-        id++;
-        let {username, password} = req.body;
-      
-        const db = req.app.get('db');
-        db.newUser([id, username]).then(users => {
-            res.status(200).send(users);
-        }
-        )
-
-    },
 
     getUsers: (req,res)=>{
         req.app.get('db').getUsers().then(users=>{
+            
             if (users===null){
                 res.json(users)
             }

@@ -65,12 +65,12 @@ app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
     successRedirect: 'http://localhost:3000/home'
 }))
+app.get('/api/sheep', (req,res)=>{
+    console.log(req.session.passport)
+})
 
-// app.get('/api/friends/:userid', controller.getFriends)
-// app.post(`/api/createFriend`, controller.createFriend)
 
-app.post('/api/auth/login', authController.login);
-app.post('/api/auth/register', authController.register);
+// app.post('/api/auth/login', authController.login);
 app.get('/api/getUsers', authController.getUsers);
 app.post('/api/addUser', authController.addUser);
 
