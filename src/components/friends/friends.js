@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {quests, equipQuest} from '../../ducks/reducer'
+import { quests, equipQuest } from '../../ducks/reducer'
 import axios from 'axios';
 
 
@@ -9,47 +9,47 @@ class Quests extends Component {
         super();
 
         this.state = {
-            questData: [],
-            modal: false
+            name: '',
+            location: ''
         }
 
     }
 
-    componentDidMount() {
-        axios.get('/api/getQuests').then(res => {
+    componentWillMount() {
+        axios.get('/api/getFriends').then(res => {
+            console.log(res.data)
             this.setState({
-                questData: res.data
+                name: res.data,
+                location: res.data
             })
         })
     }
 
+    showFriends(friend) {
+        console.log(friend.name, friend.location)
+        return (
+            <div>
+                <p>Name of friend: {friend.name}</p>
+                <p>Location of friend: {friend.location}</p>
+            </div>
 
-    equipQuest(id, bosshp, bossdmg){
-        this.props.equipQuest(id, bosshp, bossdmg)
-        this.setState({
-            modal: true
-        })
+        )
     }
 
-    
-     
+
+
+
 
     render() {
-        let quests = this.state.questData.map(quest =>
-            <div className="questBlock" key={quest.id}>
-                <h2 className="questName">{quest.name}</h2>
-                <img className="questPic" src={quest.avatar}/>
-                <p className="questDes">{quest.description}</p>
-                <p className="questP">Boss HP: {quest.bosshp}</p>
-                <p className="questP">Boss Damage: {quest.bossdmg}</p>
-                <p className="questP">Required Level: {quest.lvl}</p>
-                <button className="questBtn" onClick={()=>this.equipQuest(quest.id, quest.bosshp, quest.bossdmg)}>Start Quest!</button>
-            </div>
-        )
+        // 83F
+       var eightyThreeF = this.state.friends.map(friend => {
+           return this.showFriends(friend)
+       })
+        
 
         return (
-            <div className="questsDiv">
-              
+            <div>
+
             </div>
         )
     }
@@ -62,4 +62,4 @@ function mapStateToProps(state) {
 
     }
 }
-export default connect(mapStateToProps, {quests, equipQuest})(Quests)
+export default connect(mapStateToProps, { quests, equipQuest })(Quests)
